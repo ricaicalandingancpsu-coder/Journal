@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+[data-theme='cream'] {
+    --paper: 250 245 237;
+    --card: 255 252 247;
+    --blush: 246 225 225;
+    --rose: 190 128 136;
+    --rose-deep: 146 78 90;
+    --lavender: 229 222 240;
+    --lavender-deep: 112 96 142;
+    --ink: 68 50 44;
+    --ink-soft: 116 96 88;
+    --line: 232 221 209;
+    --on-rose: 255 252 247;
+    color-scheme: light;
+}
+
+[data-theme='blush'] {
+    --paper: 252 240 238;
+    --card: 255 249 247;
+    --blush: 247 218 218;
+    --line: 238 214 210;
+}
+
+[data-theme='lavender'] {
+    --paper: 245 242 249;
+    --card: 253 251 255;
+    --blush: 244 227 232;
+    --lavender: 224 216 240;
+    --line: 223 217 235;
+}
+
+[data-theme='night'] {
+    --paper: 34 28 30;
+    --card: 46 38 41;
+    --blush: 72 50 57;
+    --rose: 205 146 156;
+    --rose-deep: 226 166 175;
+    --lavender: 62 54 80;
+    --lavender-deep: 192 178 222;
+    --ink: 244 234 228;
+    --ink-soft: 190 175 168;
+    --line: 78 66 67;
+    --on-rose: 38 28 31;
+    color-scheme: dark;
+}
+
+html[data-text='large'] {
+    font-size: 18px;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-paper font-sans text-ink antialiased;
+    }
+
+    h1, h2, h3, h4 {
+        @apply font-display tracking-tight;
+    }
+
+    :focus-visible {
+        @apply outline-none ring-2 ring-rose-deep ring-offset-2 ring-offset-paper;
+    }
+
+    ::selection {
+        @apply bg-blush;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60;
+    }
+    .btn-primary { @apply bg-rose-deep text-onrose shadow-soft hover:brightness-110; }
+    .btn-secondary { @apply border border-line bg-card text-ink hover:border-rose hover:bg-blush/50; }
+    .btn-ghost { @apply text-ink-soft hover:bg-blush/60 hover:text-ink; }
+    .btn-danger { @apply bg-red-700 text-white hover:bg-red-800; }
+
+    .input {
+        @apply block w-full rounded-xl border border-line bg-card px-3.5 py-2.5 text-ink shadow-none placeholder:text-ink-soft/60 focus:border-rose-deep focus:ring-1 focus:ring-rose-deep;
+    }
+
+    .card {
+        @apply rounded-2xl border border-line bg-card shadow-soft;
+    }
+
+    .eyebrow {
+        @apply text-xs font-semibold uppercase tracking-[0.18em] text-rose-deep;
+    }
+
+    /* Ruled notebook paper for the writing surface */
+    .ruled {
+        line-height: 2rem;
+        background-image: linear-gradient(to bottom, transparent 1.9rem, rgb(var(--line)) 1.9rem, rgb(var(--line)) 2rem);
+        background-size: 100% 2rem;
+        background-attachment: local;
+    }
+
+    /* Washi-tape strip used as a decorative detail */
+    .tape {
+        @apply absolute h-6 w-20 bg-lavender/80;
+        background-image: repeating-linear-gradient(135deg, transparent 0 6px, rgb(255 255 255 / 0.35) 6px 12px);
+        box-shadow: 0 1px 2px rgb(var(--ink) / 0.08);
+    }
+}
