@@ -9,16 +9,18 @@ use App\Policies\JournalEntryPolicy;
 use App\Policies\MemoryPolicy;
 use App\Policies\TagPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Sanctum\Sanctum;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        JsonResource::withoutWrapping();
-        JsonResource::wrap('data');
+        config(['sanctum.stateful' => array_merge(
+            config('sanctum.stateful', []),
+            [Sanctum::$currentRequestHostPlaceholder]
+        )]);
 
         Gate::policy(JournalEntry::class, JournalEntryPolicy::class);
         Gate::policy(Memory::class, MemoryPolicy::class);
